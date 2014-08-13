@@ -3,18 +3,29 @@
 include_once '../Loader.php';
 include_once '../vendor/autoload.php';
 
-$injector = new Auryn\Provider();
-$injector->define('Video',array('videoStream'=>'Stream720'));
+$container = new Pimple\Container();
 
-$lowvideo = $injector->make('Video');
-$lowvideo->getStream();
+/**
+ * Complex object, strategy dependancies
+ */
+ //Strategy
+$container['stream1080'] = function($c){
+      return new Stream1080();
+};
+ 
+//factory object 
+$container['video'] = function($c){
+    return new Video($c['stream1080']);
+};
 
-$injector->define('Video',array('videoStream'=>'Stream360'));
-$lowvideo = $injector->make('Video');
-$lowvideo->getStream();
+$value = $container['video'];
+$value->getStream();
+ 
+/**
+ * Simple object, no dependancies
+ */
 
-$injector->define('Video',array('videoStream'=>'Stream1080'));
-$lowvideo = $injector->make('Video');
-$lowvideo->getStream();
+
+
 
 ?>

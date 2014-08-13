@@ -1,6 +1,7 @@
 {
 	"require":{
-		"rdlowrey/auryn": "*"
+		"rdlowrey/auryn": "*",
+		"pimple/pimple": "~3.0"
 	}
 
 }
